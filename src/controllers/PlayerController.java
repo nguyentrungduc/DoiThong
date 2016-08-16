@@ -16,7 +16,7 @@ public class PlayerController extends SingleController implements KeyListener{
 
     private GameInput gameInput;
     private static final int FLY_SPEED = 7;
-    private static final int DROP_SPEED = 3;
+    private static final int DROP_SPEED = 9;
 
     public PlayerController(GameObject gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
@@ -24,7 +24,7 @@ public class PlayerController extends SingleController implements KeyListener{
     }
 
     public static final PlayerController instance = new PlayerController(
-            new Player(500, 200),
+            new Player(300, 200),
             new ImageDrawer("resources/bird.png")
     );
 

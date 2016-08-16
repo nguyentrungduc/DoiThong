@@ -6,7 +6,7 @@ package ultils;
 public class CommonValues {
     public static final String NAME = "Doi Thong";
 
-    public static final int SCREEN_WIDTH = 1200;
-    public static final int SCREEN_HEIGHT = 720;
+    public static final int SCREEN_WIDTH = 1260;
+    public static final int SCREEN_HEIGHT = 721;
 
 }
