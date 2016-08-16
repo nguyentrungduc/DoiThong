@@ -1,4 +1,7 @@
-import controllers.PineControllerManager;
+import controllers.PlayerController;
+import controllers.enemy.RocketControllerManager;
+import controllers.pine.PineControllerManager;
+import models.Player;
 import ultils.Ultils;
 
 import java.awt.*;
@@ -18,7 +21,7 @@ public class GameWindow extends Frame implements Runnable{
     public GameWindow(){
         this.setVisible(true);
         this.setLocation(0, 0);
-        this.setSize(1000, 2000);
+        this.setSize(800, 2000);
 
         this.addWindowListener(new WindowListener() {
             @Override
@@ -57,6 +60,7 @@ public class GameWindow extends Frame implements Runnable{
 
             }
         });
+        this.addKeyListener(PlayerController.instance);
 
         background = Ultils.loadImage("resources/background.jpg");
         this.bufferedImage = new BufferedImage(1000,2000,BufferedImage.TYPE_INT_ARGB);
@@ -71,7 +75,9 @@ public class GameWindow extends Frame implements Runnable{
     public void update(Graphics g) {
         bufferImageGraphic.drawImage(background, 0, 0, null);
 
+        PlayerController.instance.draw(bufferImageGraphic);
         PineControllerManager.instance.draw(bufferImageGraphic);
+        RocketControllerManager.instance.draw(bufferImageGraphic);
 
         g.drawImage(bufferedImage, 0, 0, null);
 
@@ -81,7 +87,9 @@ public class GameWindow extends Frame implements Runnable{
     public void run() {
         while (true) {
             try {
+                PlayerController.instance.run();
                 PineControllerManager.instance.run();
+                RocketControllerManager.instance.run();
 
                 Thread.sleep(17);
                 repaint();
