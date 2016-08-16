@@ -9,4 +9,6 @@ public class CommonValues {
     public static final int SCREEN_WIDTH = 1260;
     public static final int SCREEN_HEIGHT = 721;
 
+    public static boolean GAME_RUNNING = true;
+
 }

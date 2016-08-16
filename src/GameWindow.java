@@ -1,3 +1,4 @@
+import controllers.CollsionPool;
 import controllers.PlayerController;
 import controllers.enemy.RocketControllerManager;
 import controllers.pine.PineControllerManager;
@@ -5,6 +6,7 @@ import models.Player;
 import ultils.CommonValues;
 import ultils.Ultils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -86,11 +88,12 @@ public class GameWindow extends Frame implements Runnable{
 
     @Override
     public void run() {
-        while (true) {
+        while (CommonValues.GAME_RUNNING) {
             try {
                 PlayerController.instance.run();
                 PineControllerManager.instance.run();
                 RocketControllerManager.instance.run();
+                CollsionPool.instance.run();
 
                 Thread.sleep(17);
                 repaint();
@@ -98,6 +101,7 @@ public class GameWindow extends Frame implements Runnable{
                 e.printStackTrace();
             }
         }
+//        System.exit(0);
     }
 }
 
