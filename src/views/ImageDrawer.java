@@ -1,7 +1,7 @@
 package views;
 
 import models.GameObject;
-import ultils.Ultils;
+import Utils.Utils;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class ImageDrawer implements GameDrawer {
         this.img = img;
     }
     public  ImageDrawer(String url){
-        this.img = Ultils.loadImage(url);
+        this.img = Utils.loadImage(url);
 
     }
 

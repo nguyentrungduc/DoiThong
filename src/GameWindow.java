@@ -1,8 +1,11 @@
+import controllers.CollsionPool;
 import controllers.PlayerController;
 import controllers.enemy.RocketControllerManager;
+import controllers.gamescene.GameScene;
+import Utils.CommonValues;
+import controllers.gamescene.GameSceneListener;
+import controllers.gamescene.MenuGameScene;
 import controllers.pine.PineControllerManager;
-import models.Player;
-import ultils.Ultils;
 
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -12,17 +15,36 @@ import java.awt.image.BufferedImage;
 /**
  * Created by DUC on 8/13/2016.
  */
-public class GameWindow extends Frame implements Runnable{
+public class GameWindow extends Frame implements Runnable, GameSceneListener{
     Image background;
     BufferedImage bufferedImage;
     Graphics bufferImageGraphic;
     Thread thread;
+    GameScene currentGameScene;
 
     public GameWindow(){
+        configUI();
+        changeGameScene(new MenuGameScene());
+        this.bufferedImage = new BufferedImage(CommonValues.SCREEN_WIDTH,
+                CommonValues.SCREEN_HEIGHT,
+                BufferedImage.TYPE_INT_ARGB);
+        this.bufferImageGraphic = bufferedImage.getGraphics();
+        thread = new Thread(this);
+        thread.start();
+
+    }
+
+    @Override
+    public void update(Graphics g) {
+        currentGameScene.draw(bufferImageGraphic);
+        g.drawImage(bufferedImage, -14, 0, null);
+
+    }
+
+    public void configUI(){
         this.setVisible(true);
         this.setLocation(0, 0);
-        this.setSize(800, 2000);
-
+        this.setSize(CommonValues.SCREEN_WIDTH, CommonValues.SCREEN_HEIGHT);
         this.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -60,43 +82,27 @@ public class GameWindow extends Frame implements Runnable{
 
             }
         });
-        this.addKeyListener(PlayerController.instance);
-
-        background = Ultils.loadImage("resources/background.jpg");
-        this.bufferedImage = new BufferedImage(1000,2000,BufferedImage.TYPE_INT_ARGB);
-        this.bufferImageGraphic = bufferedImage.getGraphics();
-
-        thread = new Thread(this);
-        thread.start();
-
-    }
-
-    @Override
-    public void update(Graphics g) {
-        bufferImageGraphic.drawImage(background, 0, 0, null);
-
-        PlayerController.instance.draw(bufferImageGraphic);
-        PineControllerManager.instance.draw(bufferImageGraphic);
-        RocketControllerManager.instance.draw(bufferImageGraphic);
-
-        g.drawImage(bufferedImage, 0, 0, null);
-
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (CommonValues.GAME_RUNNING) {
             try {
-                PlayerController.instance.run();
-                PineControllerManager.instance.run();
-                RocketControllerManager.instance.run();
-
+                currentGameScene.run();
                 Thread.sleep(17);
                 repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+//        System.exit(0);
+    }
+
+    public void changeGameScene(GameScene gameScene){
+        currentGameScene = gameScene;
+        this.addKeyListener(currentGameScene.getKeyListener());
+        currentGameScene.setGameSceneListener(this);
+
     }
 }
 
