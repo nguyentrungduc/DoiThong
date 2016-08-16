@@ -1,4 +1,4 @@
-package ultils;
+package Utils;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by DUC on 8/12/2016.
  */
-public class Ultils {
+public class Utils {
     public static Image loadImage(String url) {
         try {
             return ImageIO.read(new File(url));

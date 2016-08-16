@@ -1,9 +1,10 @@
 package controllers;
 
 import controllers.enemy.RocketController;
+import controllers.gamescene.GameSceneListener;
 import models.GameObject;
 import models.Player;
-import ultils.CommonValues;
+import Utils.CommonValues;
 import views.GameDrawer;
 import views.ImageDrawer;
 
@@ -20,6 +21,7 @@ public class PlayerController extends SingleController implements KeyListener, C
     private GameInput gameInput;
     private static final int FLY_SPEED = 7;
     private static final int DROP_SPEED = 9;
+    private GameSceneListener gameSceneListener;
 
     public PlayerController(GameObject gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
@@ -80,5 +82,9 @@ public class PlayerController extends SingleController implements KeyListener, C
             CommonValues.GAME_RUNNING = false;
 //            System.exit(0);
         }
+    }
+
+    public void setGameSceneListener(GameSceneListener gameSceneListener){
+        this.gameSceneListener = gameSceneListener;
     }
 }
